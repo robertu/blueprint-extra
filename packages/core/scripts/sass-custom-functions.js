@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Palantir Technologies, Inc. All rights reserved.
+ * Copyright 2019 Palantir Technologies, Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-import { Classes } from "@blueprintjs/core";
+const inliner = require("sass-inline-svg");
 
-const NS = Classes.getClassNamespace();
-
-export const MULTISELECT = `${NS}-multi-select`;
-export const MULTISELECT_POPOVER = `${MULTISELECT}-popover`;
-export const MULTISELECT_TAG_INPUT_INPUT = `${MULTISELECT}-tag-input-input`;
-export const OMNIBAR = `${NS}-omnibar`;
-export const OMNIBAR_OVERLAY = `${OMNIBAR}-overlay`;
-export const SELECT = `${NS}-select`;
-export const SELECT_POPOVER = `${SELECT}-popover`;
+module.exports = {
+    /**
+     * Sass function to inline a UI icon svg and change its path color.
+     *
+     * Usage:
+     * svg-icon("16px/icon-name.svg", (path: (fill: $color)) )
+     */
+    "svg-icon": inliner("../../resources/icons", {
+        // run through SVGO first
+        optimize: true,
+        // minimal "uri" encoding is smaller than base64
+        encodingFormat: "uri"
+    }),
+};
